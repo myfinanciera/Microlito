@@ -1,0 +1,39 @@
+POST https://servicesqa.siigo.com/topics/BankDomainEvents
+Content-Type: application/vnd.kafka.json.v2+json
+
+{
+  "records": [ {
+    "value": {
+      "Code": "999",
+      "Name": "Banco-999",
+      "TenantID": "0x00000000000000000000000000154412"
+    },
+    "headers": [{"key": "EventType",  "value": "QmFua0NyZWF0ZWREb21haW5FdmVudA==" }]
+    }
+  ]
+}
+
+###
+POST https://servicesqa.siigo.com/topics/BankDomainEvents
+Content-Type: application/vnd.kafka.json.v2+json
+
+{
+  "records": [ {
+    "value": {
+      "Code": "998",
+      "Name": "Banco-998",
+      "TenantID": "0x00000000000000000000000000154412"
+    },
+    "headers": [{"key": "EventType",  "value": "QmFua1VwZGF0ZWREb21haW5FdmVudA==" }]
+  }
+  ]
+}
+
+
+### 
+
+GET https://servicesqa.siigo.com/topics/
+
+
+###
+GET http://localhost:5000/api/bank

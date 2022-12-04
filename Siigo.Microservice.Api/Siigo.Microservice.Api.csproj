@@ -1,0 +1,108 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <TargetFramework>net6.0</TargetFramework>
+        <RootNamespace>Siigo.Microservice.Api</RootNamespace>
+        <UserSecretsId>b2c5843a-21fe-4727-a62f-64242a31ef44</UserSecretsId>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+        <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+        <SonarQubeExclude>false</SonarQubeExclude>
+        <ServerGarbageCollection>false</ServerGarbageCollection>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <LangVersion>10</LangVersion>
+        <RuntimeIdentifiers>win10-x64;linux-x64;osx-x64</RuntimeIdentifiers>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(RunConfiguration)' == 'Siigo.Microservice' ">
+        <StartAction>Project</StartAction>
+        <LaunchUrl>swagger</LaunchUrl>
+        <ApplicationURL>https://localhost:5001;http://localhost:5000</ApplicationURL>
+    </PropertyGroup>
+
+    <PropertyGroup>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+        <NoWarn>$(NoWarn);1591</NoWarn>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Calzolari.Grpc.AspNetCore.Validation" Version="6.1.1" />
+        <PackageReference Include="Figgle" Version="0.4.0" />
+        <PackageReference Include="Grpc" Version="2.46.3" />
+        <PackageReference Include="Grpc.AspNetCore" Version="2.46.0" />
+        <PackageReference Include="Grpc.AspNetCore.Server.Reflection" Version="2.46.0-pre1" />
+        <PackageReference Include="Grpc.Core" Version="2.46.3" />
+        <PackageReference Include="Grpc.AspNetCore.Server" Version="2.47.0-pre1" />
+        <PackageReference Include="Grpc.Core.Api" Version="2.47.0-pre1" />
+        <PackageReference Include="Microsoft.AspNetCore.Grpc.Swagger" Version="0.1.0-alpha.21317.5" /> 
+        <PackageReference Include="Grpc.Tools" Version="2.47.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Mapster.Immutable" Version="1.0.0" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
+        <PackageReference Include="Microsoft.AspNetCore.Grpc.HttpApi" Version="0.1.0-rc" />
+        <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+        <PackageReference Include="prometheus-net.AspNetCore" Version="6.0.0" />
+        <PackageReference Include="prometheus-net.AspNetCore.Grpc" Version="6.0.0" />
+        <PackageReference Include="Scrutor" Version="4.2.0" />
+        <PackageReference Include="ServiceModel.Grpc" Version="1.4.8" />
+        <PackageReference Include="ServiceModel.Grpc.AspNetCore" Version="1.4.8" />
+        <PackageReference Include="Siigo.Core.Logs" Version="2.0.1" />
+        <PackageReference Include="coverlet.msbuild" Version="3.1.2">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="FluentAssertions" Version="6.6.0" />
+        <PackageReference Include="FluentValidation.AspNetCore" Version="10.4.0" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="6.0.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.16.0" />
+        <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="6.0.3" />
+        <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+        <PackageReference Include="Siigo.Kafka.Auth" Version="0.0.3" />
+        <PackageReference Include="Steeltoe.Extensions.Configuration.ConfigServerCore" Version="3.2.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore" Version="6.3.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Server.Kestrel" Version="2.2.0" />
+        <PackageReference Include="librdkafka.redist" Version="1.9.2" />
+        <PackageReference Include="Microsoft.AspNetCore.Mvc.Versioning" Version="5.0.0" />
+        <PackageReference Include="Weknow.DI.Extensions" Version="1.0.22" />
+        <PackageReference Include="Siigo.Core.SeedWork" Version="0.2.1" />
+    </ItemGroup>
+
+    <ItemGroup>
+        
+        <ProjectReference Include="..\Siigo.Microservice.Infrastructure\Siigo.Microservice.Infrastructure.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <SonarQubeSetting Include="sonar.coverage.exclusions">
+            <Value>
+                **/*Consumer.cs,
+                **/Proto/**,
+                **/*ServiceCollectionExtension.cs,
+                **/*RegisterMapping.cs,
+                **/*ExceptionInterceptor.cs,
+                **/Infrastructure/**,
+                **/SeedWork/**,
+                Program.cs,
+                Startup.cs,
+                **/Filter/**
+            </Value>
+        </SonarQubeSetting>
+    </ItemGroup>
+
+    <Target Name="Mapster">
+        <Exec WorkingDirectory="$(ProjectDir)" Command="dotnet build" />
+        <Exec WorkingDirectory="$(ProjectDir)" Command="dotnet tool restore" />
+        <Exec WorkingDirectory="$(ProjectDir)" Command="dotnet mapster model -a &quot;$(TargetDir)$(ProjectName).dll&quot;" />
+        <Exec WorkingDirectory="$(ProjectDir)" Command="dotnet mapster extension -a &quot;$(TargetDir)$(ProjectName).dll&quot;" />
+        <Exec WorkingDirectory="$(ProjectDir)" Command="dotnet mapster mapper -a &quot;$(TargetDir)$(ProjectName).dll&quot;" />
+    </Target>
+
+</Project>

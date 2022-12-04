@@ -1,0 +1,23 @@
+trigger:
+  - dev
+  - sandbox
+  - master
+  - cicd
+
+resources:
+  repositories:
+    - repository: Pipelines
+      type: git
+      name: "Siigo/Siigo.Pipeline"
+      
+
+extends:
+  
+  template: netcore/netcore-pipeline.yaml@Pipelines
+  
+  parameters:
+    projectName: ms-archetype-csharp-microlito
+    environment: aks
+    namespace: siigo-archetypes
+    
+

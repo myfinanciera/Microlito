@@ -1,0 +1,40 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+        <RootNamespace>Siigo.Microservice.Infrastructure</RootNamespace>
+    </PropertyGroup>
+
+    <ItemGroup>
+        <PackageReference Include="Dapper" Version="2.0.123" />
+        <PackageReference Include="DataAbstractions.Dapper" Version="3.1.0" />
+        <PackageReference Include="EventStore.Client.Grpc.Streams" Version="20.10.0" />
+        <PackageReference Include="EventStore.Client" Version="21.2.2" />
+        <PackageReference Include="Flurl.Http" Version="3.2.3" />
+        <PackageReference Include="Mapster" Version="7.3.0" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.5" />
+        <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.5" />
+        <PackageReference Include="MongoDB.Driver" Version="2.15.1" />
+        <PackageReference Include="Siigo.Core.Database" Version="0.1.*" />
+        <PackageReference Include="Siigo.Core.Provider" Version="2.0.1-alpha.20220907.1" />
+        <PackageReference Include="Siigo.Core.Security" Version="2.0.4-alpha.20220907.1" />
+        <PackageReference Include="Siigo.Core.DistributedCache" Version="2.0.0" />
+        <PackageReference Include="SlimMessageBus.Host" Version="1.20.0" />
+        <PackageReference Include="SlimMessageBus" Version="1.6.0" />
+        <PackageReference Include="SlimMessageBus.Host.AspNetCore" Version="1.7.3" />
+        <PackageReference Include="SlimMessageBus.Host.Kafka" Version="1.20.0" />
+        <PackageReference Include="SlimMessageBus.Host.Serialization.Json" Version="1.4.5" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <ProjectReference Include="..\Siigo.Microservice.Application\Siigo.Microservice.Application.csproj" />
+        <ProjectReference Include="..\Siigo.Microservice.Domain\Siigo.Microservice.Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+        <SonarQubeSetting Include="sonar.coverage.exclusions">
+            <Value>**/*DomainEventBackgroundService.cs, **/*ServiceCollectionExtension.cs</Value>
+        </SonarQubeSetting>
+    </ItemGroup>
+
+</Project>
